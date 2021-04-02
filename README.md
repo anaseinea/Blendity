@@ -11,7 +11,7 @@ You can download a tarball file from [here](https://aetuts.itch.io/blendity) the
 or
 You can download this repo as zip and unpack it or clone it then install it from Window > Package Manager then click the "+" icon and choose "Add package from disk ..."
 or 
-Install it from Window > Package Manager then click the "+" icon and choose "Add package from git url ..." and put https://github.com/anaseinea/Blendity
+Install it from Window > Package Manager then click the "+" icon and choose "Add package from git url ..." and put https://github.com/anaseinea/Blendity.git
 Note: cloning or "Add package from git url ..." requires you to have git and git lfs installed
 
 Commands are found in the context menu in the "Project" window under "Blendity",
