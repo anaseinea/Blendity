@@ -1,0 +1,13 @@
+{
+  "name": "com.ae.blendity",
+  "version": "1.0.0",
+  "displayName": "Blendity",
+  "description": "Unity Asset for running Blender 3D processes/scripts from a context menu",
+  "unity": "2019.1",
+  "keywords": ["blender", "fracture"],
+  "author": {
+    "name" : "Anas Einea",
+   "email" : "anasainea@gmail.com"
+  },
+  "repository": "https://github.com/anaseinea/Blendity"
+}
