@@ -68,7 +68,10 @@ namespace Blendity
       string result = proc.StandardOutput.ReadToEnd();
       string error = proc.StandardError.ReadToEnd();
       if (error.Length > 0)
+      {
+        Debug.Log(result);
         Debug.LogError(error);
+      }
 
       CommandOutput output = new CommandOutput
       {

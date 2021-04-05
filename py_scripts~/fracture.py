@@ -12,6 +12,9 @@ objs = bpy.context.scene.objects[:]
 
 i = 0
 for obj in objs:
+  if obj.type != 'MESH':
+    continue
+
   ps = obj.modifiers.new("Part", 'PARTICLE_SYSTEM').particle_system
   ps.seed = get_int('seed') + i
   i += 1
@@ -33,6 +36,8 @@ bpy.ops.object.add_fracture_cell_objects(
 bpy.ops.object.select_all(action='DESELECT')
 
 for obj in objs:
+  if obj.type != 'MESH':
+    continue
   obj.select_set(True)
 
 bpy.ops.object.delete(use_global=False)

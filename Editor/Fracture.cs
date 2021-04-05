@@ -19,28 +19,27 @@ namespace Blendity
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
       string[,] defaultVariables = {
-      { "numOfPieces", "100" },
-      { "noise", "0" },
-      { "scaleX", "1" },
-      { "scaleY", "1" },
-      { "scaleZ", "1" },
-      { "smoothFaces", "False" },
-      { "sharpEdges", "True" },
-      { "margin", "0" },
-      { "recenterOrigin", "True" },
+      { "numOfPieces", "20", "int:2,500" },
+      { "noise", "0", "float:0,1" },
+      { "scaleX", "1", "float:0,1" },
+      { "scaleY", "1", "float:0,1" },
+      { "scaleZ", "1", "float:0,1" },
+      { "smoothFaces", "False" , "bool"},
+      { "sharpEdges", "True", "bool" },
+      { "margin", "0" , "float:0,1"},
+      { "recenterOrigin", "True", "bool" },
     };
       modal.defaultVariables = defaultVariables;
-      modal.OnStart = (List<KeyValue> variables) =>
+      modal.OnStart = (List<KeyValueConfig> variables) =>
       {
         EditorUtility.DisplayProgressBar("Shattering Your Mesh !", "Generating Pieces", .1f);
 
         Func<string, int, Dictionary<string, string>> EnvCreator = (string fileName, int threadSeed) =>
         {
           int seed = (int)Stopwatch.GetTimestamp() + threadSeed;
-          string input = Utils.GetWindowsPath(fileName);
           string output = Utils.GetWindowsPath(fileName, "-frac");
           Dictionary<string, string> envVars = new Dictionary<string, string>{
-          {"input",$"{input}"},
+          {"input",$"{fileName}"},
           {"output",$"{output}"},
           {"seed",$"{seed}"},
           };

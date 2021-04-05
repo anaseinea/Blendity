@@ -61,3 +61,4 @@ crashlytics-build.properties
 __pycache__
 
 com.ae.blendity-*.tgz
+com.ae.blendity-*.tgz.meta

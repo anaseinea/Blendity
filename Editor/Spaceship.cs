@@ -21,20 +21,20 @@ namespace Blendity
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
       string[,] defaultVariables = {
-        { "Number of Spaceships", "1"},
-        { "num_hull_segments_min", "3" },
-        { "num_hull_segments_max", "6" },
-        { "create_asymmetry_segments", "True" },
-        { "num_asymmetry_segments_min", "1" },
-        { "num_asymmetry_segments_max", "5" },
-        { "create_face_detail", "True" },
-        { "allow_horizontal_symmetry", "False" },
-        { "allow_vertical_symmetry", "False" },
-        { "apply_bevel_modifier", "True" },
-        { "assign_materials", "True" },
+        { "Number of Spaceships", "1","int:1,20" },
+        { "num_hull_segments_min", "3","int:1,20"  },
+        { "num_hull_segments_max", "6","int:1,20" },
+        { "create_asymmetry_segments", "True","bool" },
+        { "num_asymmetry_segments_min", "1","int:1,20" },
+        { "num_asymmetry_segments_max", "5","int:1,20" },
+        { "create_face_detail", "True","bool" },
+        { "allow_horizontal_symmetry", "False","bool" },
+        { "allow_vertical_symmetry", "False","bool" },
+        { "apply_bevel_modifier", "True","bool" },
+        { "assign_materials", "True","bool" },
       };
       modal.defaultVariables = defaultVariables;
-      modal.OnStart = (List<KeyValue> variables) =>
+      modal.OnStart = (List<KeyValueConfig> variables) =>
       {
         EditorUtility.DisplayProgressBar("Creating Spaceships !", "Generating Spaceships", .1f);
 
@@ -45,10 +45,9 @@ namespace Blendity
         {
           int seed = (int)Stopwatch.GetTimestamp() + threadSeed;
           string spaceshipName = $"spaceship_{seed}";
-          UnityEngine.Debug.Log(path);
           string output = $@"{path}\{spaceshipName}\{spaceshipName}.fbx";
           Dictionary<string, string> envVars = new Dictionary<string, string>{
-          {"output",$"{output}"}
+            {"output",$"{output}"}
           };
           variables.ForEach((variable) => envVars.Add(variable.key, variable.value));
           return envVars;
@@ -58,7 +57,7 @@ namespace Blendity
           $@"-b -P py_scripts~\generate_spaceship.py",
           numOfShips,
           EnvCreator
-         );
+        );
         EditorUtility.DisplayProgressBar("Creating Spaceships !", "Importing Models", .5f);
 
         float progressPerLoop = 0.4f / procOutputs.Count;
@@ -77,6 +76,5 @@ namespace Blendity
       };
       modal.ShowModalUtility();
     }
-
   }
 }
