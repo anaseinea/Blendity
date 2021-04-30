@@ -2,11 +2,12 @@
 Unity Asset for running Blender 3D processes/scripts from a context menu
 
 ## Features
-* Import/Export of fbx, obj, 3dx and gltf models
-* Fracture multiple files in parallel (mesh has to be closed, no holes no loose parts)
-* Generate multiple procedural spaceships in parallel (via [a1studmuffin's SpaceshipGenerator](https://github.com/a1studmuffin/SpaceshipGenerator))
-* Generate LOD with custom number of levels and reduction ratio
+* Procedural tree generation with 9 types of trees 2K or 5K triangles (via Sapling Tree add-on) [Video Showcase](https://www.youtube.com/watch?v=pQSfgwxG9tQ)
+* Generate procedural spaceships in parallel (via [a1studmuffin's SpaceshipGenerator](https://github.com/a1studmuffin/SpaceshipGenerator))
+* Fracture multiple files in parallel (mesh has to be closed, no holes no loose parts) [Video Showcase](https://www.youtube.com/watch?v=tlss-FGgKHs)
+* LOD creation with custom number of levels and reduction ratio
 * Unwrap UVs using one of Blenders methods (smart, lightmap, sphere projection, capsule projection or cube projection)
+* Import/Export of fbx, obj, 3dx and gltf models
 
 ## Usage
 * You can download a tarball file from [here](https://aetuts.itch.io/blendity) then install it from Window > Package Manager then click the "+" icon and choose "Add package from tarball ..." and select the com.ae.blendity-X.X.X.tgz file that you downloaded

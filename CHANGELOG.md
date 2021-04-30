@@ -1,5 +1,9 @@
 ## [Unreleased]
-- Procedural Tree Generation
+- Procedural Rock, Snow and Diamond Generation
+
+## [1.2.0] - 2021-04-30
+### Added
+- Procedural Tree Generation With 9 Types of Trees (via Sapling Tree add-on)
 
 ## [1.1.0] - 2021-04-05
 ### Added

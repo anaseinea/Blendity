@@ -17,6 +17,7 @@ namespace Blendity
   {
     private string newVariableKey = "";
     public string[,] defaultVariables;
+    public bool canAddCustomVariables = false;
     private List<KeyValueConfig> variables;
     private ReorderableList list;
 
@@ -73,7 +74,6 @@ namespace Blendity
           }
         };
 
-
       list.onCanRemoveCallback = (ReorderableList mlist) =>
       {
         return variables[mlist.index].userCreated;
@@ -81,7 +81,7 @@ namespace Blendity
 
       list.onCanAddCallback = (ReorderableList mlist) =>
       {
-        return newVariableKey.Length > 0 && variables.All((variable) => variable.key != newVariableKey);
+        return canAddCustomVariables && newVariableKey.Length > 0 && variables.All((variable) => variable.key != newVariableKey);
       };
 
       list.onAddCallback = (ReorderableList l) =>
@@ -102,15 +102,20 @@ namespace Blendity
       if (list == null)
       {
         InitializeList();
-        position = new Rect(Event.current.mousePosition - new Vector2(400, 400), new Vector2(400, 600));
+        position = new Rect(Event.current.mousePosition - new Vector2(200, 200), new Vector2(400, 400));
       }
       GUILayout.BeginVertical(GUILayout.MinHeight(position.height - EditorGUIUtility.singleLineHeight * 3));
       list.DoLayoutList();
       GUILayout.EndVertical();
-      GUI.SetNextControlName("New Variable Key");
-      newVariableKey = EditorGUILayout.TextField("New Variable Key", newVariableKey);
+
+      if (canAddCustomVariables)
+      {
+        GUI.SetNextControlName("New Variable Key");
+        newVariableKey = EditorGUILayout.TextField("New Variable Key", newVariableKey);
+      }
+
       EditorGUILayout.BeginHorizontal();
-      if (GUILayout.Button("Close"))
+      if (GUILayout.Button("Cancel"))
         Close();
       if (GUILayout.Button("Start"))
       {

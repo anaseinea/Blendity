@@ -4,11 +4,12 @@ import sys
 sys.path.insert(0, './py_scripts~')
 
 from import_export import import_scene, export_scene
-from value_getters import get_int, get_float, get_str, get_vec, get_bool
+from value_getters import get_str
 
 import_scene()
 
-unwrap_mode = get_str('unwrap_mode') #"smart_project", "lightmap_pack", "cube_project","cylinder_project","sphere_project"
+unwrap_mode = get_str('unwrap_mode')
+# "smart_project", "lightmap_pack", "cube_project","cylinder_project","sphere_project"
 
 objs = bpy.context.scene.objects[:]
 for obj in objs:
@@ -24,6 +25,3 @@ for obj in objs:
   bpy.ops.object.editmode_toggle()
 
 export_scene()
-
-
-

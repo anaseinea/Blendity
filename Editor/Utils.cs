@@ -67,13 +67,20 @@ namespace Blendity
       }
     }
 
-    public static void ExtractTexturesAndMaterials(string assetPath)
+    public static string GetImporterPath(string assetPath)
     {
       assetPath = assetPath.Replace("\\", "/");
       if (assetPath.StartsWith(Application.dataPath))
       {
         assetPath = "Assets" + assetPath.Substring(Application.dataPath.Length);
       }
+      return assetPath;
+    }
+
+    public static void ExtractTexturesAndMaterials(string assetPath)
+    {
+      assetPath = GetImporterPath(assetPath);
+
       AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
       ModelImporter modelImporter = assetImporter as ModelImporter;
       string[] outputFilePieces = assetPath.Split('/');
@@ -82,6 +89,26 @@ namespace Blendity
       modelImporter.ExtractTextures(outputDir);
       AssetDatabase.Refresh();
       ExtractMaterialsFromAsset(assetImporter, outputDir);
+    }
+
+    public static void SearchAndRemapMaterials(string assetPath)
+    {
+      assetPath = GetImporterPath(assetPath);
+
+      ModelImporter modelImporter = AssetImporter.GetAtPath(assetPath) as ModelImporter;
+      modelImporter.SearchAndRemapMaterials(ModelImporterMaterialName.BasedOnMaterialName, ModelImporterMaterialSearch.Local);
+      modelImporter.SaveAndReimport();
+    }
+
+    public static void CreateMaterial(string path)
+    {
+      string relativePath = Utils.GetImporterPath(path);
+      if (AssetDatabase.LoadAssetAtPath(relativePath, typeof(Material)) == null)
+      {
+        Material mat = new Material(Shader.Find("Standard"));
+
+        AssetDatabase.CreateAsset(mat, relativePath);
+      }
     }
   }
 }

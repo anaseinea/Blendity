@@ -62,3 +62,6 @@ __pycache__
 
 com.ae.blendity-*.tgz
 com.ae.blendity-*.tgz.meta
+
+bookmarks.txt
+recent-files.txt

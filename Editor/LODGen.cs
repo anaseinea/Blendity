@@ -8,19 +8,19 @@ namespace Blendity
 {
   public class LODGen : Editor
   {
-    [MenuItem("Assets/Blendity/Generate LOD", true)]
+    [MenuItem("Assets/Blendity/Make LOD", true)]
     public static bool GenerateLODValid()
     {
       return Utils.IsValidImports();
     }
 
-    [MenuItem("Assets/Blendity/Generate LOD")]
+    [MenuItem("Assets/Blendity/Make LOD")]
     public static void GenerateLOD()
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
       string[,] defaultVariables = {
         { "number_of_LOD", "4","int:1,8" },
-        { "least_detail_percent", "30","float:0,99" }
+        { "least_detail_percent", "20","float:0,99" }
       };
       modal.defaultVariables = defaultVariables;
       modal.OnStart = (List<KeyValueConfig> variables) =>

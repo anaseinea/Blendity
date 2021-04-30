@@ -98,7 +98,7 @@ namespace Blendity
         string fileName = selectedFileNames[i];
         fileName = Utils.GetWindowsPath(fileName);
 
-        tasks.Add(Task.Run(() => RunCommand(command, envCreator == null ? null : envCreator(fileName, i), appName, true)));
+        tasks.Add(Task.Run(() => RunCommand(command, envCreator == null ? null : envCreator(fileName, i*10), appName, true)));
       }
 
       Task.WaitAll(tasks.ToArray());
@@ -123,7 +123,7 @@ namespace Blendity
       for (int i = 0; i < n; i++)
       {
         tasks.Add(Task.Run(
-          () => RunCommand(command, envCreator == null ? null : envCreator(path, i), appName, true)
+          () => RunCommand(command, envCreator == null ? null : envCreator(path, i * 10), appName, true)
           ));
       }
 

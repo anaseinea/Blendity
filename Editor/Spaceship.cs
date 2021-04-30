@@ -9,14 +9,14 @@ namespace Blendity
 {
   public class Spaceship : Editor
   {
-    [MenuItem("Assets/Blendity/Generate Spaceship", true)]
+    [MenuItem("Assets/Blendity/Generate/Spaceships", true)]
     public static bool GenerateSpaceshipValid()
     {
       string activeName = Utils.GetActiveFileName();
       return !activeName.EndsWith("Assets") && Directory.Exists(activeName);
     }
 
-    [MenuItem("Assets/Blendity/Generate Spaceship")]
+    [MenuItem("Assets/Blendity/Generate/Spaceships")]
     public static void GenerateSpaceship()
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
@@ -71,6 +71,7 @@ namespace Blendity
           EditorUtility.DisplayProgressBar("Creating Spaceships !", "Importing Materials and Textures #" + i++, progress);
           Utils.ExtractTexturesAndMaterials(procOutput.outputFile);
         });
+        procOutputs.ForEach(UnityEngine.Debug.Log);
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
       };

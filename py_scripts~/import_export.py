@@ -1,5 +1,6 @@
 import bpy
-from os import environ
+from os import environ, path, makedirs
+
 
 def import_scene():
   inputPath = environ.get('input')
@@ -13,11 +14,18 @@ def import_scene():
   elif inputPath.endswith("gltf"):
     import_scene.gltf(filepath=inputPath)
 
+
 def export_scene():
   outputPath = environ.get('output')
+  directory = '\\'.join(outputPath.split('\\')[:-1])
+  if not path.isdir(directory):
+    makedirs(directory)
+
   export_scene = bpy.ops.export_scene
   if outputPath.endswith("fbx"):
-    export_scene.fbx(filepath=outputPath, path_mode='COPY', embed_textures=True)
+    export_scene.fbx(filepath=outputPath,
+                     path_mode='COPY',
+                     embed_textures=True)
   elif outputPath.endswith("obj"):
     export_scene.obj(filepath=outputPath)
   elif outputPath.endswith("x3d"):
