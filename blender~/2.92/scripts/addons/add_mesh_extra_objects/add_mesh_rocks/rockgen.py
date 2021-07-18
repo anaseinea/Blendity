@@ -1099,6 +1099,14 @@ class OBJECT_OT_add_mesh_rock(bpy.types.Operator):
             box.prop(self, 'user_seed')
         box.prop(self, 'preset_values')
 
+    def is_defined(self, val):
+      try:
+        val
+      except NameError:
+        return False
+      else:
+        return True
+
     def execute(self, context):
         # turn off 'Enter Edit Mode'
         use_enter_edit_mode = bpy.context.preferences.edit.use_enter_edit_mode
@@ -1106,9 +1114,9 @@ class OBJECT_OT_add_mesh_rock(bpy.types.Operator):
 
         # The following "if" block loads preset values:
         if self.lastPreset != int(self.preset_values):
-            self.scale_X = utils.toFloats(self.presetsList[int(self.preset_values)][1])
-            self.scale_Y = utils.toFloats(self.presetsList[int(self.preset_values)][2])
-            self.scale_Z = utils.toFloats(self.presetsList[int(self.preset_values)][3])
+            self.scale_X = self.scale_X or utils.toFloats(self.presetsList[int(self.preset_values)][1])
+            self.scale_Y = self.scale_Y or utils.toFloats(self.presetsList[int(self.preset_values)][2])
+            self.scale_Z = self.scale_Z or utils.toFloats(self.presetsList[int(self.preset_values)][3])
             self.skew_X = float(self.presetsList[int(self.preset_values)][4])
             self.skew_Y = float(self.presetsList[int(self.preset_values)][5])
             self.skew_Z = float(self.presetsList[int(self.preset_values)][6])
@@ -1116,15 +1124,14 @@ class OBJECT_OT_add_mesh_rock(bpy.types.Operator):
             self.scale_fac = utils.toFloats(self.presetsList[int(self.preset_values)][8])
             self.deform = float(self.presetsList[int(self.preset_values)][9])
             self.rough = float(self.presetsList[int(self.preset_values)][10])
-            self.detail = int(self.presetsList[int(self.preset_values)][11])
-            self.display_detail = int(self.presetsList[int(self.preset_values)][12])
+            self.detail = self.detail or int(self.presetsList[int(self.preset_values)][11])
+            self.display_detail = self.display_detail or int(self.presetsList[int(self.preset_values)][12])
             self.smooth_fac = float(self.presetsList[int(self.preset_values)][13])
             self.smooth_it = int(self.presetsList[int(self.preset_values)][14])
             self.use_generate = bool(self.presetsList[int(self.preset_values)][15])
-            self.use_random_seed = bool(self.presetsList[int(self.preset_values)][16])
-            self.user_seed = int(self.presetsList[int(self.preset_values)][17])
+            self.use_random_seed = self.use_random_seed if self.is_defined(self.use_random_seed) else bool(self.presetsList[int(self.preset_values)][16])
+            self.user_seed = self.user_seed or int(self.presetsList[int(self.preset_values)][17])
             self.lastPreset = int(self.preset_values)
-
         # todo Add deform, deform_Var, rough, and rough_Var:
         #   *** todo completed 4/23/2011 ***
         #   *** Eliminated "deform_Var" and "rough_Var" so the script is not
