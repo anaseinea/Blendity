@@ -8,8 +8,16 @@ namespace Blendity
 {
   public class CommandOutput
   {
-    public string result, outputFile;
+    public string result, outputFile, error = "";
     public override string ToString() => result;
+    public void Print()
+    {
+      Debug.Log(result);
+      if (error.Length > 0)
+      {
+        Debug.LogError(error);
+      }
+    }
   }
 
   public class Core : Editor
@@ -67,16 +75,12 @@ namespace Blendity
 
       string result = proc.StandardOutput.ReadToEnd();
       string error = proc.StandardError.ReadToEnd();
-      if (error.Length > 0)
-      {
-        Debug.Log(result);
-        Debug.LogError(error);
-      }
 
       CommandOutput output = new CommandOutput
       {
         outputFile = procStartInfo.EnvironmentVariables["output"],
-        result = result
+        result = result,
+        error = error
       };
       return output;
     }
@@ -98,7 +102,7 @@ namespace Blendity
         string fileName = selectedFileNames[i];
         fileName = Utils.GetWindowsPath(fileName);
 
-        tasks.Add(Task.Run(() => RunCommand(command, envCreator == null ? null : envCreator(fileName, i*10), appName, true)));
+        tasks.Add(Task.Run(() => RunCommand(command, envCreator == null ? null : envCreator(fileName, i * 10), appName, true)));
       }
 
       Task.WaitAll(tasks.ToArray());

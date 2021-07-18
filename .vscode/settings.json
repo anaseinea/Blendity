@@ -1,7 +1,10 @@
 {
-  "python.linting.pylintEnabled": false,
+  "python.linting.pylintEnabled": true,
   "python.linting.pylamaEnabled": false,
   "python.linting.enabled": true,
   "python.formatting.provider": "yapf",
-  "python.linting.flake8Enabled": true
+  "python.linting.flake8Enabled": false,
+  "python.formatting.yapfArgs": [
+    "--style={based_on_style: google, column_limit: 80, indent_width: 2}"
+  ]
 }

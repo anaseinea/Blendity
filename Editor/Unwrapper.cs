@@ -8,13 +8,13 @@ namespace Blendity
 {
   public class Unwrapper : Editor
   {
-    [MenuItem("Assets/Blendity/Unwrap", true)]
+    [MenuItem("Assets/Blendity/Modify/Unwrap", true)]
     public static bool UnwrapperValid()
     {
       return Utils.IsValidImports();
     }
 
-    [MenuItem("Assets/Blendity/Unwrap")]
+    [MenuItem("Assets/Blendity/Modify/Unwrap")]
     public static void UnwrapperFn()
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
@@ -43,7 +43,8 @@ namespace Blendity
         );
         EditorUtility.DisplayProgressBar("Looking at your Mesh !", "Importing Models", .5f);
 
-        procOutputs.ForEach(UnityEngine.Debug.Log);
+        procOutputs.ForEach(output => output.Print());
+
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
       };

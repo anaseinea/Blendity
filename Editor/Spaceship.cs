@@ -71,7 +71,8 @@ namespace Blendity
           EditorUtility.DisplayProgressBar("Creating Spaceships !", "Importing Materials and Textures #" + i++, progress);
           Utils.ExtractTexturesAndMaterials(procOutput.outputFile);
         });
-        procOutputs.ForEach(UnityEngine.Debug.Log);
+        procOutputs.ForEach(output => output.Print());
+
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
       };

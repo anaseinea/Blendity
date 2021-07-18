@@ -1,51 +1,52 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
 
 namespace Blendity
 {
-  public class LODGen : Editor
+  public class AddSnow : Editor
   {
-    [MenuItem("Assets/Blendity/Modify/Make LOD", true)]
-    public static bool GenerateLODValid()
+    [MenuItem("Assets/Blendity/Modify/Add Snow", true)]
+    public static bool CreateFracValid()
     {
       return Utils.IsValidImports();
     }
 
-    [MenuItem("Assets/Blendity/Modify/Make LOD")]
-    public static void GenerateLOD()
+    [MenuItem("Assets/Blendity/Modify/Add Snow")]
+    public static void CreateFrac()
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
       string[,] defaultVariables = {
-        { "number_of_LOD", "4","int:1,8" },
-        { "least_detail_percent", "20","float:0,99" }
-      };
+        { "coverage %", "60", "int:0,100" },
+        { "height", "0.2", "float:0,1" },
+        { "mesh reduction", "0.8", "float:0,1" },
+        };
       modal.defaultVariables = defaultVariables;
       modal.OnStart = (List<KeyValueConfig> variables) =>
       {
-        EditorUtility.DisplayProgressBar("Decimating Your Mesh !", "Generating LOD clones", .2f);
+        EditorUtility.DisplayProgressBar("Snowing on Your Mesh !", "Generating Snow", .2f);
 
         Func<string, int, Dictionary<string, string>> EnvCreator = (string fileName, int threadSeed) =>
         {
-          string input = Utils.GetWindowsPath(fileName);
-          string output = Utils.GetWindowsPath(fileName, "-LOD");
+          int seed = (int)Stopwatch.GetTimestamp() + threadSeed;
+          string output = Utils.GetWindowsPath(fileName, "-with snow");
           Dictionary<string, string> envVars = new Dictionary<string, string>{
-            {"input",$"{input}"},
-            {"output",$"{output}"}
+          {"input",$"{fileName}"},
+          {"output",$"{output}"},
           };
           variables.ForEach((variable) => envVars.Add(variable.key, variable.value));
           return envVars;
         };
 
         List<CommandOutput> procOutputs = Core.RunCommandOnSelected(
-          $@"-b -P py_scripts~\generate_LOD.py",
+          $@"-b -P py_scripts~\add_snow.py",
           EnvCreator
          );
         procOutputs.ForEach(output => output.Print());
 
-        EditorUtility.DisplayProgressBar("Decimating Your Mesh !", "Importing Models", .8f);
+        EditorUtility.DisplayProgressBar("Snowing on Your Mesh !", "Importing Models", .8f);
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
       };

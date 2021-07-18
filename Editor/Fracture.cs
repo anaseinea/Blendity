@@ -8,13 +8,13 @@ namespace Blendity
 {
   public class Fracture : Editor
   {
-    [MenuItem("Assets/Blendity/Fracture", true)]
+    [MenuItem("Assets/Blendity/Modify/Fracture", true)]
     public static bool CreateFracValid()
     {
       return Utils.IsValidImports();
     }
 
-    [MenuItem("Assets/Blendity/Fracture")]
+    [MenuItem("Assets/Blendity/Modify/Fracture")]
     public static void CreateFrac()
     {
       ParamsModal modal = ScriptableObject.CreateInstance<ParamsModal>();
@@ -51,7 +51,7 @@ namespace Blendity
           $@"-b -P py_scripts~\fracture.py",
           EnvCreator
          );
-        procOutputs.ForEach(UnityEngine.Debug.Log);
+        procOutputs.ForEach(output => output.Print());
         EditorUtility.DisplayProgressBar("Shattering Your Mesh !", "Importing Models", .8f);
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
